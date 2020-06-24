@@ -1,9 +1,17 @@
 import React from 'react';
+import Game from '../Components/Game'
 
-const UserGameContainer = () => {
+const UserGameContainer = (props) => {
+    console.log(props.games)
     return ( 
         <div>
-           <h1>Profile info goes here</h1> 
+             {props.games.map(game => 
+                <Game 
+                key={game.id}
+                game={game}
+                sellGame={props.sellGame}
+                />
+            )}
         </div>
      );
 }

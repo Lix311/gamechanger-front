@@ -7,7 +7,8 @@ const GameContainer = (props) => {
             {props.games.map(game => 
                 <Game 
                 key={game.id}
-                {...game}
+                game={game}
+                addGame={props.addGame}
                 />
             )}
         </div>
