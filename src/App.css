@@ -1,0 +1,19 @@
+.navbar{
+    background-color:rgba(0, 179, 230, 0.8);
+    display: flex;
+    height: 60px;
+    margin-top: 10px;
+  }
+  .game{
+    display:flex;
+    padding: 20px;
+    border: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    margin-right: 180px;
+    background-color: rgb(242, 246, 248);
+  }
+
+
