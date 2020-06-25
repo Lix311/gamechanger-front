@@ -1,9 +1,17 @@
 import React from 'react';
+import Game from '../Components/Game'
 
-const BuySellContainer = () => {
+const BuySellContainer = (props) => {
     return ( 
         <div>
-            <h1>Buy/Sell Info goes here</h1>
+            {props.games.map(game => 
+            
+                <Game 
+                key={game.id}
+                game={game}
+                buyGame={props.buyGame}
+                />
+            )}
         </div>
      );
 }

@@ -11,7 +11,6 @@ import { Route, Switch } from 'react-router-dom'
 
 class MainContainer extends Component {
     render() {
-        console.log('main containert',this.props)
     return (  
         <div>
             <NavBar/>
@@ -42,7 +41,8 @@ class MainContainer extends Component {
                     exact path="/collect"
                     render={()=>
                         <BuySellContainer 
-                            games={this.props.games}
+                            games={this.props.soldgames}
+                            buyGame={this.props.buyGame}
                         />
                     }
                 />

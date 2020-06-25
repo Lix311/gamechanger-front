@@ -7,7 +7,8 @@ class App extends Component {
   
   state = {  
     games: [],
-    usergames: []
+    usergames: [],
+    soldgames: []
   }
 
   componentDidMount(){
@@ -20,9 +21,20 @@ class App extends Component {
     this.setState({usergames: [...this.state.usergames, game]})
   }
 
+  buyGameHandler = (game) => {
+    const boughtgame = this.state.soldgames.filter(soldgame => soldgame.name === game.name)
+    const currentgames = this.state.soldgames.filter(soldgame => soldgame.name !== game.name)
+    this.setState({usergames: [...this.state.usergames, ...boughtgame]})
+    this.setState({soldgames: currentgames})
+
+  }
+
   sellGameHandler = (game) => {
-    const newgames = this.state.usergames.filter(usergame => usergame.name !== game.name)
-    this.setState({usergames: newgames})
+    const soldgame = this.state.usergames.filter(usergame => usergame.name === game.name)
+    const currentgames = this.state.usergames.filter(usergame => usergame.name !== game.name)
+    
+    this.setState({usergames: currentgames})
+    this.setState({soldgames: [...this.state.soldgames, ...soldgame]})
   }
   
   
@@ -34,15 +46,15 @@ class App extends Component {
       return <div>Loading...</div>
     }
 
-    console.log('app',)
-
     return (  
       <div>
         <MainContainer 
           games={this.state.games.results}
           usergames={this.state.usergames}
+          soldgames={this.state.soldgames}
           addGame={this.addGameHandler}
           sellGame={this.sellGameHandler}
+          buyGame={this.buyGameHandler}
         />
       </div>
     );
