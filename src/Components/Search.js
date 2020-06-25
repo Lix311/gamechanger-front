@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Search = (props) => {
-    return ( 
-        <div className="searchBar">
-            <input 
-                placeholder='Search games' 
-                type='text' 
-                name='search'
-                // value={props.search}
-                // onChange={(event) => props.searchArticle(event)}
-            />
-        </div>
-     );
+class Search extends Component {
+    state = {  
+        search:''
+    }
+    
+    
+    handleChange = (event) => {
+        this.setState({search: event.target.value})
+    }
+    
+    render() { 
+        return (  
+            <div>
+                <input type='text' value={this.state.search} onChange={(event) => this.handleChange(event)} />
+                <button  onClick={() => this.props.search(this.state.search)}>Search</button>
+            </div>
+        );
+    }
 }
+ 
+
  
 export default Search;

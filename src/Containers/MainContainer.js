@@ -14,7 +14,7 @@ class MainContainer extends Component {
     return (  
         <div>
             <NavBar/>
-            <Search/>
+            <Search  search={this.props.searchGame}/>
             
             <Switch>
                 <Route

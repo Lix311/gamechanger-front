@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MainContainer from './Containers/MainContainer'
 
 const gameUrl = 'https://api.rawg.io/api/games?dates=2020-04-01,2020-06-30&ordering=-added&page=1&page_size=10'
+const searchGameUrl = 'https://api.rawg.io/api/games/'
 
 class App extends Component {
   
@@ -36,12 +37,18 @@ class App extends Component {
     this.setState({usergames: currentgames})
     this.setState({soldgames: [...this.state.soldgames, ...soldgame]})
   }
+
+  searchGameHandler = (string) => {
+    fetch(`https://api.rawg.io/api/games?page_size=5&search=${string}`)
+    .then(res => res.json())
+    .then(data => this.setState({games: data}))
+  }
   
   
   
   
   render() { 
-
+    console.log(this.state.games)
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
@@ -55,6 +62,7 @@ class App extends Component {
           addGame={this.addGameHandler}
           sellGame={this.sellGameHandler}
           buyGame={this.buyGameHandler}
+          searchGame={this.searchGameHandler}
         />
       </div>
     );
