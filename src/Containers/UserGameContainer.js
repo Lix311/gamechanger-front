@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Game from '../Components/Game'
+import Search from '../Components/Search'
 
-const UserGameContainer = (props) => {
-    return ( 
-        <div>
-             {props.games.map(game => 
+class UserGameContainer extends Component {
+    state = {  
+        filteredGames: this.props.games
+    }
+
+    filterGames = (searchTerm) => {
+        const filteredGames = this.props.games.filter(game => game.name === searchTerm)
+        this.setState({filteredGames: filteredGames})
+    }
+    
+    
+    render() { 
+        
+        return (  
+            <div>
+                
+            <Search clickHandler={this.filterGames}/>
+             {this.state.filteredGames.map(game => 
                 <Game 
                 key={game.id}
                 game={game}
-                sellGame={props.sellGame}
+                sellGame={this.props.sellGame}
                 />
             )}
-        </div>
-     );
+        
+            </div>
+        );
+    }
 }
  
 export default UserGameContainer;
+
+

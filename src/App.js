@@ -7,6 +7,7 @@ const searchGameUrl = 'https://api.rawg.io/api/games/'
 class App extends Component {
   
   state = {  
+    allgames: [], // everythin i searched
     games: [],
     usergames: [],
     soldgames: []
@@ -32,9 +33,9 @@ class App extends Component {
 
   sellGameHandler = (game) => {
     const soldgame = this.state.usergames.filter(usergame => usergame.name === game.name)
-    const currentgames = this.state.usergames.filter(usergame => usergame.name !== game.name)
-    
-    this.setState({usergames: currentgames})
+    // const currentgames = this.state.usergames.filter(usergame => usergame.name !== game.name)
+    // *Dont delete game from profile until its actually sold*
+    // this.setState({usergames: currentgames})
     this.setState({soldgames: [...this.state.soldgames, ...soldgame]})
   }
 
@@ -42,13 +43,12 @@ class App extends Component {
     fetch(`https://api.rawg.io/api/games?page_size=5&search=${string}`)
     .then(res => res.json())
     .then(data => this.setState({games: data}))
+
   }
+
   
   
-  
-  
-  render() { 
-    console.log(this.state.games)
+render() { 
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
@@ -63,6 +63,7 @@ class App extends Component {
           sellGame={this.sellGameHandler}
           buyGame={this.buyGameHandler}
           searchGame={this.searchGameHandler}
+          searchUserGame={this.searchUserGame}
         />
       </div>
     );

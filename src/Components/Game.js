@@ -6,7 +6,7 @@ const StyledDiv = styled.div`
     border: 0.5rem outset pink;
     outline: 0.5rem solid khaki;
     box-shadow: 0 0 0 2rem skyblue;
-    border-radius: 5px;
+    border-radius: 12px;
     font: bold 1rem sans-serif;
     margin: 2rem;
     padding: 1rem;

@@ -14,13 +14,15 @@ class MainContainer extends Component {
     return (  
         <div>
             <NavBar/>
-            <Search  search={this.props.searchGame}/>
+           
+            
             
             <Switch>
                 <Route
                     exact path="/explore"
                     render={()=>
                         <GameContainer 
+                            searchGame={this.props.searchGame}
                             games={this.props.games}
                             addGame={this.props.addGame}
                         />

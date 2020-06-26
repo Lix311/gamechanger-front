@@ -14,7 +14,7 @@ class Search extends Component {
         return (  
             <div>
                 <input type='text' value={this.state.search} onChange={(event) => this.handleChange(event)} />
-                <button  onClick={() => this.props.search(this.state.search)}>Search</button>
+                <button  onClick={() => this.props.clickHandler(this.state.search)}>Search</button>
             </div>
         );
     }
