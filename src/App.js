@@ -1,26 +1,50 @@
 import React, { Component } from 'react';
 import MainContainer from './Containers/MainContainer'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const gameUrl = 'https://api.rawg.io/api/games?dates=2020-04-01,2020-06-30&ordering=-added&page=1&page_size=10'
 const searchGameUrl = 'https://api.rawg.io/api/games/'
+const userUrl = 'http://localhost:3001/users'
 
 class App extends Component {
   
   state = {  
-    allgames: [], // everythin i searched
+    allGames: [], // everythin i searched
     games: [],
     usergames: [],
-    soldgames: []
+    soldgames: [],
+    userInfo: [],
+    currentUser: '',
+    loggedIn: false
+
+
   }
 
   componentDidMount(){
     fetch(gameUrl)
     .then(res => res.json())
-    .then(data => this.setState({games: data}))
+    .then(data => this.setState({games: data})) // Fill Explore Page w/Games
+    fetch(gameUrl) // Fill state w/All Games
+    .then(res => res.json())
+    .then(data => this.setState({allGames: [...this.state.allGames, data]}))
+    fetch(userUrl) // Fill state w/All User Info
+    .then(res => res.json())
+    .then(data => this.setState({userInfo: data.data}))
+
+    
   }
   
   addGameHandler = (game) => {
-    this.setState({usergames: [...this.state.usergames, game]})
+    const currentUserId = this.state.currentUser.id
+    const gameId = game.id 
+
+
+
+
+  
+
+    this.setState({usergames: [...this.state.usergames, game.id]})
+
   }
 
   buyGameHandler = (game) => {
@@ -46,16 +70,29 @@ class App extends Component {
 
   }
 
+  loginHandler = (loginName, loginPassword) => {
+    
+    let matchingUser = this.state.userInfo.find(user => user.attributes.username === loginName)
+
+    
+    if (matchingUser.attributes.password === loginPassword){
+      this.setState({loggedIn: !this.state.loggedIn})
+      this.setState({currentUser: matchingUser})
+      //set the users games
+      this.setState({usergames: [matchingUser.relationships.games.data[0].id]})
+    }
+  }
+
   
   
 render() { 
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
-
     return (  
       <div>
         <MainContainer 
+          login={this.loginHandler}
           games={this.state.games.results}
           usergames={this.state.usergames}
           soldgames={this.state.soldgames}
