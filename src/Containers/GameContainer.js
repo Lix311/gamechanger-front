@@ -2,6 +2,7 @@ import React from 'react';
 import Game from '../Components/Game'
 import Search from '../Components/Search'
 
+
 const GameContainer = (props) => {
     return ( 
         <div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MainContainer from './Containers/MainContainer'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 const gameUrl = 'https://api.rawg.io/api/games?dates=2020-04-01,2020-06-30&ordering=-added&page=1&page_size=10'
 const searchGameUrl = 'https://api.rawg.io/api/games/'
@@ -38,10 +39,8 @@ class App extends Component {
     const currentUserId = this.state.currentUser.id
     const gameId = game.id 
 
-
-
-
-  
+    fetch(`http://localhost:3001/users${currentUserId}`)
+    //try to make a POST to users/1
 
     this.setState({usergames: [...this.state.usergames, game.id]})
 
@@ -67,12 +66,15 @@ class App extends Component {
     fetch(`https://api.rawg.io/api/games?page_size=5&search=${string}`)
     .then(res => res.json())
     .then(data => this.setState({games: data}))
+    // try to add to all games
+    fetch(`https://api.rawg.io/api/games?page_size=5&search=${string}`)
+    .then(res => res.json())
+    .then(data => this.setState({allGames: [...this.state.allGames, data]}))
 
   }
 
   loginHandler = (loginName, loginPassword) => {
-    
-    let matchingUser = this.state.userInfo.find(user => user.attributes.username === loginName)
+    const matchingUser = this.state.userInfo.find(user => user.attributes.username === loginName)
 
     
     if (matchingUser.attributes.password === loginPassword){

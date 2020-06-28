@@ -1,33 +1,43 @@
 import React from 'react';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { Navbar,Nav} from 'react-bootstrap';
 
 
+const StyledLinks = styled.div`
+
+line-height: 1em;
+    display: flex-end;
+    text-decoration: none;
+    padding: 120px;
+    margin: 42px; 
+    justify-content: space-between;
 
 
-const StyledBar = styled.div`
-
-    background-color lightblue;
-    display: flex;
-    height: 60px;
-    margin-top: 10px;
-    justify-content: space-evenly
 `
-
-
-
 
 const NavBar = (props) => {
     return ( 
 
-       <StyledBar>
+      
           
-           <Link to='/explore'> <h1>Explore</h1> </Link> 
-           <Link to='/profile'> <h1>Profile</h1> </Link>
-           <Link to='/collect'> <h1>Collect</h1> </Link>
-           <Link to='/login'> <h1>Login</h1> </Link>
+           
+
+           <Navbar bg="dark" variant="dark">
+    <Navbar.Brand href="/explore">GameChanger</Navbar.Brand>
+    <Nav className="mr-auto">
+        <StyledLinks>
+            <Link to='/explore'>Explore</Link> 
+           <Link to='/profile'> Profile</Link>
+           <Link to='/collect'> Collect </Link>
+           <Link to='/login'> Login </Link> 
+        </StyledLinks>
+    </Nav>
+  </Navbar>
+
+           
          
-        </StyledBar>
+       
 
 
 
