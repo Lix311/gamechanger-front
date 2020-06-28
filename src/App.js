@@ -38,8 +38,17 @@ class App extends Component {
   addGameHandler = (game) => {
     const currentUserId = this.state.currentUser.id
     const gameId = game.id 
+    let newGame = {
+      id: gameId,
+      type: 'games'
+    }
 
-    fetch(`http://localhost:3001/users${currentUserId}`)
+    fetch(`http://localhost:3001/users${currentUserId}`,{
+    method: "POST", 
+    headers: {"Content-Type": "application/json"},
+    body:JSON.stringify(newGame)
+    })
+
     //try to make a POST to users/1
 
     this.setState({usergames: [...this.state.usergames, game.id]})
