@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
 const gameUrl = 'https://api.rawg.io/api/games?dates=2020-04-01,2020-06-30&ordering=-added&page=1&page_size=10'
-const searchGameUrl = 'https://api.rawg.io/api/games/'
 const userUrl = 'http://localhost:3001/users'
 
 class App extends Component {
@@ -33,25 +32,47 @@ class App extends Component {
     .then(data => this.setState({userInfo: data.data}))
 
     
+
+    
+  }
+
+  addToDatabase = (game) => {
+    console.log('...adding to db')
+    fetch(`http://localhost:3001/games`,{
+    method: "POST", 
+    headers: {"Content-Type": "application/json"},
+    body:JSON.stringify({
+      id: game.id, 
+      title: game.title, 
+      platform: game.platform, 
+      genre: game.genre, 
+      release_date: game.release_date, 
+      description: game.description, 
+      metascore: game.metascore
+    })})
+    .then(res => res.json())
+    .then(json => console.log(json))
   }
   
   addGameHandler = (game) => {
-    const currentUserId = this.state.currentUser.id
-    const gameId = game.id 
+    const gameId = game.id.toString()
+    console.log(gameId)
     let newGame = {
-      id: gameId,
-      type: 'games'
+      user_id: '1',
+      api_id: gameId
+      
     }
 
-    fetch(`http://localhost:3001/users${currentUserId}`,{
+    fetch(`http://localhost:3001/usergames`,{
     method: "POST", 
     headers: {"Content-Type": "application/json"},
     body:JSON.stringify(newGame)
     })
 
-    //try to make a POST to users/1
+    // fill usergames backend 
 
-    this.setState({usergames: [...this.state.usergames, game.id]})
+
+    this.setState({usergames: [...this.state.usergames, game]})
 
   }
 
@@ -100,6 +121,7 @@ render() {
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
+    this.state.allGames.map(game => this.addToDatabase(game))
     return (  
       <div>
         <MainContainer 

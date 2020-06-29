@@ -7,15 +7,16 @@ const GameContainer = (props) => {
     return ( 
         <div>
             <Search  clickHandler={props.searchGame}/>
-           
+            
             {props.games.map(game => 
                 <Game 
                 key={game.id}
                 game={game}
                 addGame={props.addGame}
-
+            
                 />
-            )}
+                )}
+           
         </div>
      );
 }

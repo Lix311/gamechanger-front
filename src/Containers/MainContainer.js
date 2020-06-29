@@ -31,7 +31,8 @@ class MainContainer extends Component {
                 <Route
                     exact path="/profile"
                     render={()=>
-                        <UserGameContainer 
+                       <UserGameContainer 
+                            
                             games={this.props.usergames}
                             sellGame={this.props.sellGame}
                         />
