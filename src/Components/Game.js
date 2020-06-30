@@ -1,20 +1,26 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, CardGroup, button } from 'react-bootstrap';
+import styled from 'styled-components'
+
+
+const StyledCard = styled.div`
+    background-color: grey;
+    height: 100%;
+    width: 400px;
+
+`
 
 
 
 const Game = (props) => {
 
     return ( 
-  <Card>
+  
+  <StyledCard>
     <Card.Img variant="top" src={props.game.background_image} />
     <Card.Body>
     <Card.Title>{props.game.name}</Card.Title>
-      <Card.Text>
-        This is a wider card with supporting text below as a natural lead-in to
-        additional content. This card has even longer content than the first to
-        show that equal height action.
-      </Card.Text>
+      <button>See Description</button>
       <button onClick={() => 
                 props.buyGame
                 ? props.buyGame(props.game)
@@ -26,7 +32,8 @@ const Game = (props) => {
     <Card.Footer>
     <small>{props.game.platforms.map(platform => platform.platform.name + ' ')}</small>
     </Card.Footer>
-  </Card>
+  </StyledCard>
+  
 
 
 

@@ -5,6 +5,8 @@ import './App.css'
 
 const gameUrl = 'https://api.rawg.io/api/games?dates=2020-04-01,2020-06-30&ordering=-added&page=1&page_size=10'
 const userUrl = 'http://localhost:3001/users'
+const userGamesUrl = 'http://localhost:3001/usergames'
+const allGames = 'http://localhost:3001/games'
 
 class App extends Component {
   
@@ -16,6 +18,8 @@ class App extends Component {
     userInfo: [],
     currentUser: '',
     currentGame: '',
+    userCurrentGames: [],
+    currentGameIds: [],
     loggedIn: false
 
 
@@ -28,8 +32,12 @@ class App extends Component {
     fetch(userUrl) // Fill state w/All User Info
     .then(res => res.json())
     .then(data => this.setState({userInfo: data}))
-
-    
+    fetch(allGames)
+    .then(res => res.json())
+    .then(data => this.setState({allGames: data})) // Fill allGames with games database
+    fetch(userGamesUrl)
+    .then(res => res.json())
+    .then(data => this.setState({usergames: data}))
 
     
   }
@@ -46,7 +54,8 @@ class App extends Component {
     method: "POST", 
     headers: {"Content-Type": "application/json"},
     body:JSON.stringify({
-      slug: game.slug, 
+      slug: game.slug,
+      image: game.background_image, 
       title: game.name, 
       platform: platforms.join(', '), 
       genre: genres.join(', '), 
@@ -54,34 +63,25 @@ class App extends Component {
       metascore: game.metacritic
     })})
     .then(res => res.json())
-    .then(data => this.setState({currentGame: data}))
-
-    // ABOVE POPULATES localhost:3001/games
-
-    // BELOW POPULATES localhost:3001/usergames
+    .then(data => this.setState({currentGame: data}, () => {
+      
+      
+    fetch(`http://localhost:3001/usergames`,{
+    method: "POST", 
+    headers: {"Content-Type": "application/json"},
+    body:JSON.stringify({
+      api_id: game.slug,
+      user_id: this.state.currentUser.id,
+      game_id: this.state.currentGame.id
+    })
+    })
+    .then(res => res.json())
+    .then(json => console.log(json))
+      
+    console.log("state after game added", this.state);
+    }))
     
-    // how do I find game_id on line 75
-    
-    // const currentUser = this.state.userInfo.find(user => user.username === this.state.currentUser.username)// find id of current user 
-    // const currentGame = this.state.allGames[this.state.allGames.length-1]
-    
-    
-    // fetch(`http://localhost:3001/usergames`,{
-    // method: "POST", 
-    // headers: {"Content-Type": "application/json"},
-    // body:JSON.stringify({
-    //   api_id: game.slug,
-    //   user_id: currentUser.id,
-    //   game_id: currentGame.id
-    // })
-    // })
-    // .then(res => res.json())
-    // .then(json => console.log(json))
-
-    
-
-
-    this.setState({usergames: [...this.state.usergames, game]})
+    // this.setState({usergames: [...this.state.usergames, game]})
 
   }
 
@@ -112,18 +112,35 @@ class App extends Component {
 
   }
 
+  
+
   loginHandler = (loginName, loginPassword) => {
     
     const matchingUser = this.state.userInfo.find(user => user.username === loginName)
     
-    
-     if (matchingUser.password === loginPassword){
+    if (matchingUser.password === loginPassword){
        this.setState({loggedIn: !this.state.loggedIn})
-       this.setState({currentUser: matchingUser})
        
-      
-     }
-  }
+       this.setState({currentUser: matchingUser}, () => {
+        
+        const currentUserId = this.state.currentUser.id
+        const usergames = this.state.usergames
+        
+        const currentUserGames = usergames.filter(game => game.user_id === currentUserId) // finds usergames of the current User
+        const currentGameIds = currentUserGames.map(game => game.game_id)
+        
+        this.setState({currentGameIds: currentGameIds }, () => {
+          const filteredResults = this.state.allGames.filter(game => this.state.currentGameIds.includes(game.id))
+          this.setState({userCurrentGames: filteredResults})
+              // console.log(this.state.allGames)
+              // console.log(this.state.currentGameIds)
+              // console.log(filteredResults)
+            })
+         // sets game ids for current user
+
+      })
+    }
+}
 
   
   
@@ -144,6 +161,7 @@ render() {
           buyGame={this.buyGameHandler}
           searchGame={this.searchGameHandler}
           searchUserGame={this.searchUserGame}
+          currentGames={this.userCurrentGames}
         />
       </div>
     );

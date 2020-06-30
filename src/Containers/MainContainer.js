@@ -32,7 +32,7 @@ class MainContainer extends Component {
                     exact path="/profile"
                     render={()=>
                        <UserGameContainer 
-                            
+                            currentgames={this.props.currentgames}
                             games={this.props.usergames}
                             sellGame={this.props.sellGame}
                         />
