@@ -15,6 +15,7 @@ class App extends Component {
     soldgames: [],
     userInfo: [],
     currentUser: '',
+    currentGame: '',
     loggedIn: false
 
 
@@ -24,52 +25,60 @@ class App extends Component {
     fetch(gameUrl)
     .then(res => res.json())
     .then(data => this.setState({games: data})) // Fill Explore Page w/Games
-    fetch(gameUrl) // Fill state w/All Games
-    .then(res => res.json())
-    .then(data => this.setState({allGames: [...this.state.allGames, data]}))
     fetch(userUrl) // Fill state w/All User Info
     .then(res => res.json())
-    .then(data => this.setState({userInfo: data.data}))
+    .then(data => this.setState({userInfo: data}))
 
     
 
     
   }
 
-  addToDatabase = (game) => {
-    console.log('...adding to db')
+  
+  addGameHandler = (game) => {
+    
+    this.setState({allGames: [...this.state.allGames, game]})
+    
+    const platforms = game.platforms.map(platform => platform.platform.name)
+    const genres = game.genres.map(genre => genre.name)
+    
     fetch(`http://localhost:3001/games`,{
     method: "POST", 
     headers: {"Content-Type": "application/json"},
     body:JSON.stringify({
-      id: game.id, 
-      title: game.title, 
-      platform: game.platform, 
-      genre: game.genre, 
-      release_date: game.release_date, 
-      description: game.description, 
-      metascore: game.metascore
+      slug: game.slug, 
+      title: game.name, 
+      platform: platforms.join(', '), 
+      genre: genres.join(', '), 
+      release_date: game.released, 
+      metascore: game.metacritic
     })})
     .then(res => res.json())
-    .then(json => console.log(json))
-  }
-  
-  addGameHandler = (game) => {
-    const gameId = game.id.toString()
-    console.log(gameId)
-    let newGame = {
-      user_id: '1',
-      api_id: gameId
-      
-    }
+    .then(data => this.setState({currentGame: data}))
 
-    fetch(`http://localhost:3001/usergames`,{
-    method: "POST", 
-    headers: {"Content-Type": "application/json"},
-    body:JSON.stringify(newGame)
-    })
+    // ABOVE POPULATES localhost:3001/games
 
-    // fill usergames backend 
+    // BELOW POPULATES localhost:3001/usergames
+    
+    // how do I find game_id on line 75
+    
+    // const currentUser = this.state.userInfo.find(user => user.username === this.state.currentUser.username)// find id of current user 
+    // const currentGame = this.state.allGames[this.state.allGames.length-1]
+    
+    
+    // fetch(`http://localhost:3001/usergames`,{
+    // method: "POST", 
+    // headers: {"Content-Type": "application/json"},
+    // body:JSON.stringify({
+    //   api_id: game.slug,
+    //   user_id: currentUser.id,
+    //   game_id: currentGame.id
+    // })
+    // })
+    // .then(res => res.json())
+    // .then(json => console.log(json))
+
+    
 
 
     this.setState({usergames: [...this.state.usergames, game]})
@@ -104,15 +113,16 @@ class App extends Component {
   }
 
   loginHandler = (loginName, loginPassword) => {
-    const matchingUser = this.state.userInfo.find(user => user.attributes.username === loginName)
-
     
-    if (matchingUser.attributes.password === loginPassword){
-      this.setState({loggedIn: !this.state.loggedIn})
-      this.setState({currentUser: matchingUser})
-      //set the users games
-      this.setState({usergames: [matchingUser.relationships.games.data[0].id]})
-    }
+    const matchingUser = this.state.userInfo.find(user => user.username === loginName)
+    
+    
+     if (matchingUser.password === loginPassword){
+       this.setState({loggedIn: !this.state.loggedIn})
+       this.setState({currentUser: matchingUser})
+       
+      
+     }
   }
 
   
@@ -121,7 +131,7 @@ render() {
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
-    this.state.allGames.map(game => this.addToDatabase(game))
+  
     return (  
       <div>
         <MainContainer 
