@@ -43,6 +43,8 @@ class App extends Component {
   }
 
   
+
+  
   addGameHandler = (game) => {
     
     this.setState({allGames: [...this.state.allGames, game]})
@@ -81,7 +83,7 @@ class App extends Component {
     console.log("state after game added", this.state);
     }))
     
-    // this.setState({usergames: [...this.state.usergames, game]})
+    this.setState({userCurrentGames: [...this.state.userCurrentGames, game]})
 
   }
 
@@ -148,6 +150,8 @@ render() {
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
+
+    console.log(this.state.userCurrentGames)
   
     return (  
       <div>
@@ -161,7 +165,7 @@ render() {
           buyGame={this.buyGameHandler}
           searchGame={this.searchGameHandler}
           searchUserGame={this.searchUserGame}
-          currentGames={this.userCurrentGames}
+          userCurrentGames={this.state.userCurrentGames}
         />
       </div>
     );

@@ -17,9 +17,9 @@ const Game = (props) => {
     return ( 
   
   <StyledCard>
-    <Card.Img variant="top" src={props.game.background_image} />
+    <Card.Img variant="top" src={props.game.background_image ? props.game.background_image : props.game.image } />
     <Card.Body>
-    <Card.Title>{props.game.name}</Card.Title>
+    <Card.Title>{props.game.name ? props.game.name : props.game.title}</Card.Title>
       <button>See Description</button>
       <button onClick={() => 
                 props.buyGame
@@ -30,9 +30,13 @@ const Game = (props) => {
         </button>
     </Card.Body>
     <Card.Footer>
-    <small>{props.game.platforms.map(platform => platform.platform.name + ' ')}</small>
+    <small>
+      {props.game.platforms ? props.game.platforms.map(platform => platform.platform.name + ' ') : props.game.platform}
+    </small>
     </Card.Footer>
   </StyledCard>
+
+
   
 
 

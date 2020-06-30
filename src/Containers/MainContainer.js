@@ -10,6 +10,7 @@ import { Route, Switch } from 'react-router-dom'
 
 class MainContainer extends Component {
     render() {
+        console.log(this.props.userCurrentGames)
     return (  
         <div>
             <NavBar/>
@@ -32,7 +33,7 @@ class MainContainer extends Component {
                     exact path="/profile"
                     render={()=>
                        <UserGameContainer 
-                            currentgames={this.props.currentgames}
+                            currentgames={this.props.userCurrentGames}
                             games={this.props.usergames}
                             sellGame={this.props.sellGame}
                         />

@@ -4,17 +4,17 @@ import Search from '../Components/Search'
 
 class UserGameContainer extends Component {
     state = {  
-        filteredGames: this.props.games
+        filteredGames: this.props.currentgames
     }
 
     filterGames = (searchTerm) => {
-        const filteredGames = this.props.games.filter(game => game.name === searchTerm)
+        const filteredGames = this.props.currentgames.filter(game => game.title === searchTerm)
         this.setState({filteredGames: filteredGames})
     }
     
     
     render() { 
-        
+       console.log(this.props)
         return (  
             <div>
                 
