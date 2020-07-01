@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 
 const StyledContainer = styled.div`
+    display: flex;
     background-color: grey;
     height: 100%;
     width: 400px;
@@ -12,11 +13,12 @@ const StyledContainer = styled.div`
 `
 
 
+
 const GameContainer = (props) => {
     return ( 
         <div>
             <Search  clickHandler={props.searchGame}/>
-            <StyledContainer>
+                
             {props.games.map(game => 
                 <Game 
                 key={game.id}
@@ -25,7 +27,7 @@ const GameContainer = (props) => {
             
                 />
                 )}
-            </StyledContainer>
+               
            
         </div>
      );

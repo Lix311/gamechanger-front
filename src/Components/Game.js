@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card, CardGroup, button } from 'react-bootstrap';
 import styled from 'styled-components'
 
@@ -10,31 +10,71 @@ const StyledCard = styled.div`
 
 `
 
-
-
-const Game = (props) => {
-
-    return ( 
+class Game extends Component {
+  state = {  
+    description: '',
+    toggled: false
+  }
   
-  <StyledCard>
-    <Card.Img variant="top" src={props.game.background_image ? props.game.background_image : props.game.image } />
+  getDescription = () => {
+    if (this.props.game.slug){
+      fetch(`https://api.rawg.io/api/games/${this.props.game.slug}`)
+      .then(res => res.json())
+      .then(data => this.extractContent(data.description))
+
+      this.setState({toggled: !this.state.toggled})
+    
+    } else if (this.props.game.results.slug){
+      fetch(`https://api.rawg.io/api/games/${this.props.game.results.slug}`)
+      .then(res => res.json())
+      .then(data => this.extractContent(data.description))
+
+      this.setState({toggled: !this.state.toggled})
+    }
+}
+
+extractContent = (s) => {
+  const span = document.createElement('span');
+  span.innerHTML = s;
+  this.setState({description: span.textContent || span.innerText})
+}
+  
+  
+  render() { 
+    return ( 
+
+      <StyledCard>
+    <Card.Img variant="top" src={this.props.game.background_image ? this.props.game.background_image : this.props.game.image } />
     <Card.Body>
-    <Card.Title>{props.game.name ? props.game.name : props.game.title}</Card.Title>
-      <button>See Description</button>
+    <Card.Title>{this.props.game.name ? this.props.game.name : this.props.game.title}</Card.Title>
+    <Card.Text>{this.state.toggled ? this.state.description : ''}</Card.Text>
+    <button onClick={this.getDescription}>{this.state.toggled ? 'Hide Description' : 'Show Description'}</button>
       <button onClick={() => 
-                props.buyGame
-                ? props.buyGame(props.game)
-                : props.addGame ? props.addGame(props.game) : props.sellGame(props.game)}>{
+                this.props.buyGame
+                ? this.props.buyGame(this.props.game)
+                : this.props.addGame ? this.props.addGame(this.props.game) : this.props.sellGame(this.props.game)}>{
                 
-                props.buyGame ? 'Buy Game' : props.addGame ? 'Add Game' : 'Sell Game'}
+                this.props.buyGame ? 'Buy Game' : this.props.addGame ? 'Add Game' : 'Sell Game'}
         </button>
     </Card.Body>
     <Card.Footer>
     <small>
-      {props.game.platforms ? props.game.platforms.map(platform => platform.platform.name + ' ') : props.game.platform}
+      {this.props.game.platforms ? this.props.game.platforms.map(platform => platform.platform.name + ' ') : this.props.game.platform}
     </small>
     </Card.Footer>
   </StyledCard>
+     
+     );
+  }
+}
+ 
+export default Game;
+
+
+
+  
+  
+  
 
 
   
@@ -43,7 +83,5 @@ const Game = (props) => {
 
 
 
-     );
-}
+    
  
-export default Game;
