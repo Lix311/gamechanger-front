@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Game from '../Components/Game'
 import Search from '../Components/Search'
+import { CardDeck } from 'react-bootstrap'
 
 class UserGameContainer extends Component {
     state = {  
@@ -19,6 +20,7 @@ class UserGameContainer extends Component {
             <div>
                 
             <Search clickHandler={this.filterGames}/>
+            <CardDeck>
              {this.state.filteredGames.map(game => 
                 <Game 
                 key={game.id}
@@ -26,7 +28,7 @@ class UserGameContainer extends Component {
                 sellGame={this.props.sellGame}
                 />
             )}
-        
+            </CardDeck>
             </div>
         );
     }

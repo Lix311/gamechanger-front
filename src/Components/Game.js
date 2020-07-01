@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardGroup, button } from 'react-bootstrap';
+import { Card, CardGroup, Button } from 'react-bootstrap';
 import styled from 'styled-components'
 
 
@@ -7,6 +7,8 @@ const StyledCard = styled.div`
     background-color: grey;
     height: 100%;
     width: 400px;
+    padding: 8px;
+    margin: 8px;
 
 `
 
@@ -48,7 +50,7 @@ extractContent = (s) => {
     <Card.Body>
     <Card.Title>{this.props.game.name ? this.props.game.name : this.props.game.title}</Card.Title>
     <Card.Text>{this.state.toggled ? this.state.description : ''}</Card.Text>
-    <button onClick={this.getDescription}>{this.state.toggled ? 'Hide Description' : 'Show Description'}</button>
+    <Button variant="light" onClick={this.getDescription}>{this.state.toggled ? 'Hide Description' : 'Show Description'}</Button>{' '}
       <button onClick={() => 
                 this.props.buyGame
                 ? this.props.buyGame(this.props.game)

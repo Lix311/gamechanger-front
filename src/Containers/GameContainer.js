@@ -1,16 +1,10 @@
 import React from 'react';
 import Game from '../Components/Game'
 import Search from '../Components/Search'
-import styled from 'styled-components'
+import { CardDeck } from 'react-bootstrap'
 
 
-const StyledContainer = styled.div`
-    display: flex;
-    background-color: grey;
-    height: 100%;
-    width: 400px;
 
-`
 
 
 
@@ -18,7 +12,8 @@ const GameContainer = (props) => {
     return ( 
         <div>
             <Search  clickHandler={props.searchGame}/>
-                
+            <br/>
+            <CardDeck>
             {props.games.map(game => 
                 <Game 
                 key={game.id}
@@ -27,7 +22,9 @@ const GameContainer = (props) => {
             
                 />
                 )}
+            </CardDeck>
                
+
            
         </div>
      );
