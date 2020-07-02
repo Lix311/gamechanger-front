@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardGroup, Button } from 'react-bootstrap';
+import { Card, CardGroup, Button, DropdownButton, Dropdown} from 'react-bootstrap';
 import styled from 'styled-components'
 
 
@@ -15,7 +15,8 @@ const StyledCard = styled.div`
 class Game extends Component {
   state = {  
     description: '',
-    toggled: false
+    toggled: false,
+    conditionType: 'Select Condition'
   }
   
   getDescription = () => {
@@ -40,6 +41,14 @@ extractContent = (s) => {
   span.innerHTML = s;
   this.setState({description: span.textContent || span.innerText})
 }
+
+changeCondition = (event) => {
+this.setState({conditionType: event})
+// updateGames={this.props.updateGames} 
+// how do i call this 
+}
+
+
   
   
   render() { 
@@ -48,16 +57,26 @@ extractContent = (s) => {
       <StyledCard>
     <Card.Img variant="top" src={this.props.game.background_image ? this.props.game.background_image : this.props.game.image } />
     <Card.Body>
-    <Card.Title>{this.props.game.name ? this.props.game.name : this.props.game.title}</Card.Title>
+    <Card.Title><h4>{this.props.game.name ? this.props.game.name : this.props.game.title}</h4></Card.Title>
     <Card.Text>{this.state.toggled ? this.state.description : ''}</Card.Text>
     <Button variant="light" onClick={this.getDescription}>{this.state.toggled ? 'Hide Description' : 'Show Description'}</Button>{' '}
-      <button onClick={() => 
+     
+    <Dropdown>
+  <DropdownButton id='dropdown-basic-button' title={this.props.game.condition ? this.props.game.condition : this.state.conditionType}  >
+    <Dropdown.Item as="button"><div onClick={(e) => this.changeCondition(e.target.textContent)}>Loose</div></Dropdown.Item>
+    <Dropdown.Item as="button"><div onClick={(e) => this.changeCondition(e.target.textContent)}>Complete</div></Dropdown.Item>
+    <Dropdown.Item as="button"><div onClick={(e) => this.changeCondition(e.target.textContent)}>New</div></Dropdown.Item>
+  </DropdownButton>
+  </Dropdown>
+  <br/>
+  <button onClick={() => 
                 this.props.buyGame
                 ? this.props.buyGame(this.props.game)
-                : this.props.addGame ? this.props.addGame(this.props.game) : this.props.sellGame(this.props.game)}>{
+                : this.props.addGame ? this.props.addGame(this.props.game,this.state.conditionType) : this.props.sellGame(this.props.game)}>{
                 
                 this.props.buyGame ? 'Buy Game' : this.props.addGame ? 'Add Game' : 'Sell Game'}
         </button>
+
     </Card.Body>
     <Card.Footer>
     <small>

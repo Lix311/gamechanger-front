@@ -20,7 +20,7 @@ class App extends Component {
     currentGame: '',
     userCurrentGames: [],
     currentGameIds: [],
-    loggedIn: false
+    loggedIn: false,
 
 
   }
@@ -45,8 +45,7 @@ class App extends Component {
   
 
   
-  addGameHandler = (game) => {
-    
+  addGameHandler = (game,condition) => {
     this.setState({allGames: [...this.state.allGames, game]})
     
     const platforms = game.platforms.map(platform => platform.platform.name)
@@ -62,7 +61,11 @@ class App extends Component {
       platform: platforms.join(', '), 
       genre: genres.join(', '), 
       release_date: game.released, 
-      metascore: game.metacritic
+      metascore: game.metacritic,
+      condition: condition,
+      loose_price: 30,
+      cib_price: 60,
+      new_price: 100
     })})
     .then(res => res.json())
     .then(data => this.setState({currentGame: data}, () => {
@@ -78,13 +81,25 @@ class App extends Component {
     })
     })
     .then(res => res.json())
-    .then(json => console.log(json))
+    
       
-    console.log("state after game added", this.state);
+    //console.log("state after game added", this.state);
     }))
+
+    // take condition and based on condition add price to game 
+    game.condition = condition;
+    game.loose_price = '30'
+    game.new_price = '100'
+    game.cib_price = '60'
+
+    console.log(game)
     
     this.setState({userCurrentGames: [...this.state.userCurrentGames, game]})
 
+  }
+
+  updateUserCurrentGames = (game) => {
+    console.log(game)
   }
 
   buyGameHandler = (game) => {
@@ -150,8 +165,6 @@ render() {
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
-
-    console.log(this.state.userCurrentGames)
   
     return (  
       <div>
@@ -166,6 +179,7 @@ render() {
           searchGame={this.searchGameHandler}
           searchUserGame={this.searchUserGame}
           userCurrentGames={this.state.userCurrentGames}
+          updateGames={this.updateUserCurrentGames}
         />
       </div>
     );
