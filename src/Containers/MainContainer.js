@@ -24,6 +24,7 @@ class MainContainer extends Component {
                             searchGame={this.props.searchGame}
                             games={this.props.games}
                             addGame={this.props.addGame}
+                            updateGames={this.props.updateGames}
                         />
                     }
                 />

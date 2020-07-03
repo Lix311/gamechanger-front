@@ -98,8 +98,43 @@ class App extends Component {
 
   }
 
-  updateUserCurrentGames = (game) => {
-    console.log(game)
+  updateUserCurrentGames = (game,gameCondition) => {
+    console.log(game.id,gameCondition)
+    
+    // need to make a patch to backend 
+    let target = this.state.userCurrentGames.find(currentgame => currentgame.id === game.id)
+    
+    if (target === undefined) {
+      return  
+    }
+
+    
+    fetch(`http://localhost:3001/games/${game.id}`, {
+      method:'PATCH',
+      headers:{"Content-Type": "application/json"},
+      body:JSON.stringify({condition: gameCondition})
+    })
+    .then(res => res.json())
+    .then(data => {
+      let target = this.state.userCurrentGames.find(currentgame => currentgame.id === game.id)
+      let index = this.state.userCurrentGames.indexOf(target)
+      let updatedGames = [...this.state.userCurrentGames]
+  
+      updatedGames[index].condition = gameCondition
+      this.setState({userCurrentGames: updatedGames})
+
+
+    })
+
+    
+    // let index = this.state.userCurrentGames.indexOf(target)
+    // let updatedGames = [...this.state.userCurrentGames]
+
+    // updatedGames[index].condition = condition
+    // this.setState({userCurrentGames: updatedGames})
+    
+    
+    
   }
 
   buyGameHandler = (game) => {
@@ -112,9 +147,6 @@ class App extends Component {
 
   sellGameHandler = (game) => {
     const soldgame = this.state.usergames.filter(usergame => usergame.name === game.name)
-    // const currentgames = this.state.usergames.filter(usergame => usergame.name !== game.name)
-    // *Dont delete game from profile until its actually sold*
-    // this.setState({usergames: currentgames})
     this.setState({soldgames: [...this.state.soldgames, ...soldgame]})
   }
 

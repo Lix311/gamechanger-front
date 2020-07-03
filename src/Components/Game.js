@@ -43,9 +43,10 @@ extractContent = (s) => {
 }
 
 changeCondition = (event) => {
-this.setState({conditionType: event})
-// updateGames={this.props.updateGames} 
-// how do i call this 
+console.log(event)
+  this.setState({conditionType: event})
+  this.props.updateGames(this.props.game, event)
+
 }
 
 
@@ -66,6 +67,7 @@ this.setState({conditionType: event})
     <Dropdown.Item as="button"><div onClick={(e) => this.changeCondition(e.target.textContent)}>Loose</div></Dropdown.Item>
     <Dropdown.Item as="button"><div onClick={(e) => this.changeCondition(e.target.textContent)}>Complete</div></Dropdown.Item>
     <Dropdown.Item as="button"><div onClick={(e) => this.changeCondition(e.target.textContent)}>New</div></Dropdown.Item>
+  {/* this is being set to Select Condition */}
   </DropdownButton>
   </Dropdown>
   <br/>

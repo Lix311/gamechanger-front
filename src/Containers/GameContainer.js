@@ -16,6 +16,7 @@ const GameContainer = (props) => {
             <CardDeck>
             {props.games.map(game => 
                 <Game 
+                updateGames={props.updateGames}
                 key={game.id}
                 game={game}
                 addGame={props.addGame}
