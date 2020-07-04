@@ -20,7 +20,8 @@ class UserGameContainer extends Component {
     }
 
     filterGames = (searchTerm) => {
-        const filteredGames = this.props.currentgames.filter(game => game.title === searchTerm)
+
+        const filteredGames = this.props.currentgames.filter(game => game.title ? game.title === searchTerm : game.name === searchTerm)
         this.setState({filteredGames: filteredGames})
     }
 
