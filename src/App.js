@@ -70,7 +70,8 @@ class App extends Component {
     .then(res => res.json())
     .then(data => this.setState({currentGame: data}, () => {
       
-      
+      this.setState({userCurrentGames: [...this.state.userCurrentGames, this.state.currentGame]})
+
     fetch(`http://localhost:3001/usergames`,{
     method: "POST", 
     headers: {"Content-Type": "application/json"},
@@ -87,14 +88,15 @@ class App extends Component {
     }))
 
     // take condition and based on condition add price to game 
-    game.condition = condition;
-    game.loose_price = '30'
-    game.new_price = '100'
-    game.cib_price = '60'
+    // game.condition = condition;
+    // game.loose_price = '30'
+    // game.new_price = '100'
+    // game.cib_price = '60' 
+    // changed this to fix duplicate bug 
 
-    console.log(game)
+    console.log(this.state.userCurrentGames)
     
-    this.setState({userCurrentGames: [...this.state.userCurrentGames, game]})
+    // this.setState({userCurrentGames: [...this.state.userCurrentGames, game]})
 
   }
 
