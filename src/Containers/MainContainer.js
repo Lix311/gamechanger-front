@@ -37,6 +37,7 @@ class MainContainer extends Component {
                             games={this.props.usergames}
                             sellGame={this.props.sellGame}
                             updateGames={this.props.updateGames}
+                            deleteGame={this.props.deleteGame}
                         />
                     }
                 />

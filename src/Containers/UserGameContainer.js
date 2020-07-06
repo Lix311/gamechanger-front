@@ -21,7 +21,7 @@ class UserGameContainer extends Component {
 
     filterGames = (searchTerm) => {
 
-        const filteredGames = this.props.currentgames.filter(game => game.title ? game.title === searchTerm : game.name === searchTerm)
+        const filteredGames = this.props.currentgames.filter(game => game.title ? game.title.toLowerCase().includes(searchTerm) || game.title.includes(searchTerm)  : game.name.toLowerCase().includes(searchTerm) || game.name.includes(searchTerm))
         this.setState({filteredGames: filteredGames})
     }
 
@@ -70,6 +70,7 @@ class UserGameContainer extends Component {
                 key={game.id}
                 game={game}
                 sellGame={this.props.sellGame}
+                deleteGame={this.props.deleteGame}
                 />
             )}
             </CardDeck>

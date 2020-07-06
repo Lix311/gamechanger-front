@@ -42,6 +42,22 @@ class App extends Component {
     
   }
 
+  deleteGameHandler = (game) => {
+    console.log('deleting...')
+
+   const filteredUserGames = this.state.userCurrentGames.filter(filteredGame => filteredGame != game)
+    this.setState({userCurrentGames: filteredUserGames})
+    // how do I refrsh profile page to show updated currentUserGames?
+    
+    fetch(`http://localhost:3001/games/${game.id}`, {
+      method:'DELETE'
+    })
+
+    
+    
+  }
+
+
   
 
   
@@ -214,6 +230,7 @@ render() {
           searchUserGame={this.searchUserGame}
           userCurrentGames={this.state.userCurrentGames}
           updateGames={this.updateUserCurrentGames}
+          deleteGame={this.deleteGameHandler}
         />
       </div>
     );

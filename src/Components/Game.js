@@ -72,12 +72,21 @@ console.log(event)
   </Dropdown>
   <br/>
   <button onClick={() => 
+                this.props.addGame 
+                ? this.props.addGame(this.props.game,this.state.conditionType)
+                : this.props.deleteGame(this.props.game)}>{
+                
+                this.props.addGame ? 'Add Game' : 'Delete Game'}
+        </button>
+
+        {/* <button onClick={() => 
                 this.props.buyGame
                 ? this.props.buyGame(this.props.game)
                 : this.props.addGame ? this.props.addGame(this.props.game,this.state.conditionType) : this.props.sellGame(this.props.game)}>{
                 
                 this.props.buyGame ? 'Buy Game' : this.props.addGame ? 'Add Game' : 'Sell Game'}
-        </button>
+        </button> */}
+        {/* {this.props.deleteGame ? <button onClick={this.props.deleteGame}> Delete Game</button> : ''} */}
 
     </Card.Body>
     <Card.Footer>
