@@ -15,6 +15,7 @@ class UserGameContainer extends Component {
     filteredGames: [],
     tearm: "",
     totalPrice: 0,
+    searchType: 'filter'
   };
 
   //   componentDidUpdate() {
@@ -81,6 +82,8 @@ class UserGameContainer extends Component {
           clickHandler={this.filterGames}
           handleChange={this.handleChange}
           tearm={this.state.tearm}
+          searchType={this.state.searchType}
+          placeholder='Filter Games'
         />
         <StyledPrice>
           <h1 style={{ color: "gold" }}>GameChange: {total}</h1>

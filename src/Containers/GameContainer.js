@@ -17,7 +17,7 @@ class GameContainer extends Component {
       render() { 
         return ( 
             <div>
-                <Search  clickHandler={this.props.searchGame} term={this.state.term} handleChange={this.handleChange} />
+                <Search  clickHandler={this.props.searchGame}  placeholder='Search Game' term={this.state.term} handleChange={this.handleChange} />
                 <br/>
                 <CardDeck>
                 {this.props.games.map(game => 

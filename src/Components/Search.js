@@ -16,10 +16,11 @@ class Search extends Component {
           type="text"
           value={this.props.tearm}
           onChange={this.props.handleChange}
+          placeholder= {this.props.placeholder}
         />
-        <button onClick={() => this.props.clickHandler(this.props.term)}>
-          Search
-        </button>
+        {this.props.searchType ? '' : <button onClick={() => this.props.clickHandler(this.props.term)}>
+          Search 
+        </button>}
       </div>
     );
   }
