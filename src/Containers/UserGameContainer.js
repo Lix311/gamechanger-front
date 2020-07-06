@@ -61,8 +61,8 @@ class UserGameContainer extends Component {
 
   render() {
     let total = 0;
-    console.log("filtered", this.state.filteredGames);
-    console.log("current", this.props.currentgames);
+    // console.log("filtered", this.state.filteredGames);
+    // console.log("current", this.props.currentgames);
     // this.setState({filteredGames: this.props.currentgames})
     this.props.currentgames.map((game) => {
       // check out .reduce
@@ -86,7 +86,7 @@ class UserGameContainer extends Component {
           placeholder='Filter Games'
         />
         <StyledPrice>
-          <h1 style={{ color: "gold" }}>GameChange: {total}</h1>
+          <h1 style={{ color: "GoldenRod" }}>GameChange: ${total}</h1>
         </StyledPrice>
         <CardDeck>
           {this.filterGames().map((game) => (

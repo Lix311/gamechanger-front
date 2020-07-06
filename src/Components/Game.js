@@ -79,6 +79,8 @@ console.log(event)
                 this.props.addGame ? 'Add Game' : 'Delete Game'}
         </button>
 
+        {this.props.sellGame ? <button onClick={this.props.sellGame}>Sell Game</button> : ''}
+
         {/* <button onClick={() => 
                 this.props.buyGame
                 ? this.props.buyGame(this.props.game)

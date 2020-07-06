@@ -10,6 +10,8 @@ const allGames = 'http://localhost:3001/games'
 
 class App extends Component {
   
+  //beyond mvp
+
   state = {  
     allGames: [], // everythin i searched
     games: [],
