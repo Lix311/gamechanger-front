@@ -13,28 +13,36 @@ const StyledPrice = styled.div`
 class UserGameContainer extends Component {
   state = {
     filteredGames: [],
+    tearm: "",
     totalPrice: 0,
   };
 
-  componentDidUpdate(){
-    if (this.props.currentgames.length !== this.state.filteredGames.length){
-        this.setState({filteredGames: this.props.currentgames})
-    }
-  }
+  //   componentDidUpdate() {
+  //     if (this.props.currentgames.length !== this.state.filteredGames.length) {
+  //       this.setState({ filteredGames: this.props.currentgames });
+  //     }
+  //   }
 
   componentDidMount() {
     this.setState({ filteredGames: this.props.currentgames });
   }
 
-  filterGames = (searchTerm) => {
+  filterGames = () => {
     const filteredGames = this.props.currentgames.filter((game) =>
       game.title
-        ? game.title.toLowerCase().includes(searchTerm) ||
-          game.title.includes(searchTerm)
-        : game.name.toLowerCase().includes(searchTerm) ||
-          game.name.includes(searchTerm)
+        ? game.title.toLowerCase().includes(this.state.tearm) ||
+          game.title.includes(this.state.tearm)
+        : game.name.toLowerCase().includes(this.state.tearm) ||
+          game.name.includes(this.state.tearm)
     );
-    this.setState({ filteredGames: filteredGames });
+    //debugger;
+    return filteredGames;
+    //this.setState({ filteredGames: filteredGames });
+  };
+
+  handleChange = (e) => {
+    console.log(e.target.value);
+    this.setState({ tearm: e.target.value });
   };
 
   createGame = () => {};
@@ -69,12 +77,16 @@ class UserGameContainer extends Component {
 
     return (
       <div>
-        <Search clickHandler={this.filterGames} />
+        <Search
+          clickHandler={this.filterGames}
+          handleChange={this.handleChange}
+          tearm={this.state.tearm}
+        />
         <StyledPrice>
           <h1 style={{ color: "gold" }}>GameChange: {total}</h1>
         </StyledPrice>
         <CardDeck>
-          {this.state.filteredGames.map((game) => (
+          {this.filterGames().map((game) => (
             <Game
               updateGames={this.props.updateGames}
               updatePrice={this.updatePrice}
