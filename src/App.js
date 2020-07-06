@@ -50,8 +50,10 @@ class App extends Component {
     // how do I refrsh profile page to show updated currentUserGames?
     
     fetch(`http://localhost:3001/games/${game.id}`, {
-      method:'DELETE'
+      method:'DELETE',
+      headers: {"Content-Type": "application/json"}
     })
+     
 
     
     
