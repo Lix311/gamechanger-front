@@ -48,6 +48,9 @@ class MainContainer extends Component {
                         <BuySellContainer 
                             games={this.props.soldgames}
                             buyGame={this.props.buyGame}
+                            soldgames={this.props.soldgames}
+                            usergames={this.props.usergames}
+                            users={this.props.users}
                         />
                     }
                 />

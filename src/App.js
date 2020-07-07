@@ -22,7 +22,8 @@ class App extends Component {
     currentGame: '',
     userCurrentGames: [],
     currentGameIds: [],
-    loggedIn: false,
+    loggedIn: false
+    
 
 
   }
@@ -36,10 +37,18 @@ class App extends Component {
     .then(data => this.setState({userInfo: data}))
     fetch(allGames)
     .then(res => res.json())
-    .then(data => this.setState({allGames: data})) // Fill allGames with games database
+    .then(data => {
+      this.setState({allGames: data})
+      const allSold = this.state.allGames.filter(allgame => allgame.sold === true)
+      this.setState({soldgames: allSold})
+    }) // populating allGames and soldGames
     fetch(userGamesUrl)
     .then(res => res.json())
     .then(data => this.setState({usergames: data}))
+
+    
+
+    
 
     
   }
@@ -66,7 +75,7 @@ class App extends Component {
 
   
   addGameHandler = (game,condition) => {
-    this.setState({allGames: [...this.state.allGames, game]})
+    //this.setState({allGames: [...this.state.allGames, game]})
     
     const platforms = game.platforms.map(platform => platform.platform.name)
     const genres = game.genres.map(genre => genre.name)
@@ -85,12 +94,14 @@ class App extends Component {
       condition: condition,
       loose_price: 30,
       cib_price: 60,
-      new_price: 100
+      new_price: 100,
+      sold: false
     })})
     .then(res => res.json())
     .then(data => this.setState({currentGame: data}, () => {
       
       this.setState({userCurrentGames: [...this.state.userCurrentGames, this.state.currentGame]})
+      this.setState({allGames: [...this.state.allGames, this.state.currentGame]})
 
     fetch(`http://localhost:3001/usergames`,{
     method: "POST", 
@@ -160,16 +171,38 @@ class App extends Component {
   }
 
   buyGameHandler = (game) => {
-    const boughtgame = this.state.soldgames.filter(soldgame => soldgame.name === game.name)
-    const currentgames = this.state.soldgames.filter(soldgame => soldgame.name !== game.name)
-    this.setState({usergames: [...this.state.usergames, ...boughtgame]})
-    this.setState({soldgames: currentgames})
+    //search thro usergames and find who the game id belongs to 
+    
+    
+    // this.setState({payReminder: [...this.state.payReminder, currentReminder]})
 
   }
 
-  sellGameHandler = (game) => {
-    const soldgame = this.state.usergames.filter(usergame => usergame.name === game.name)
-    this.setState({soldgames: [...this.state.soldgames, ...soldgame]})
+  sellGameHandler = (soldgame) => {
+    // const soldgame = this.state.usergames.filter(usergame => usergame.name === game.name)
+    // this.setState({soldgames: [...this.state.soldgames, ...soldgame]})
+    console.log(`selling ${soldgame.title}`)
+    // patch the sold so it is !false and then filter thro this.state.games and put all sold into sold array
+
+    fetch(`http://localhost:3001/games/${soldgame.id}`, {
+      method:'PATCH',
+      headers:{"Content-Type": "application/json"},
+      body:JSON.stringify({sold: true})
+    })
+    .then(res => res.json())
+    .then(data => {
+      let target = this.state.allGames.find(game => game.id === soldgame.id)
+      let index = this.state.allGames.indexOf(target)
+      let updatedGames = [...this.state.allGames]
+  
+      updatedGames[index].sold = true
+      this.setState({allGames: updatedGames})
+      
+      const allSold = this.state.allGames.filter(allgame => allgame.sold === true)
+      this.setState({soldgames: allSold})
+
+
+    })
   }
 
   searchGameHandler = (string) => {
@@ -219,6 +252,9 @@ render() {
     if (this.state.games.results === undefined) {
       return <div>Loading...</div>
     }
+
+    // const allSold = this.state.allGames.filter(allgame => allgame.sold === true)
+    // this.setState({soldgames: allSold})
   
     return (  
       <div>
@@ -226,6 +262,7 @@ render() {
           login={this.loginHandler}
           games={this.state.games.results}
           usergames={this.state.usergames}
+          users={this.state.userInfo}
           soldgames={this.state.soldgames}
           addGame={this.addGameHandler}
           sellGame={this.sellGameHandler}
@@ -235,6 +272,8 @@ render() {
           userCurrentGames={this.state.userCurrentGames}
           updateGames={this.updateUserCurrentGames}
           deleteGame={this.deleteGameHandler}
+          
+
         />
       </div>
     );

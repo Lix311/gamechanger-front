@@ -16,7 +16,8 @@ class Game extends Component {
   state = {  
     description: '',
     toggled: false,
-    conditionType: 'Select Condition'
+    conditionType: 'Select Condition',
+    sold: false
   }
   
   getDescription = () => {
@@ -71,24 +72,27 @@ console.log(event)
   </DropdownButton>
   </Dropdown>
   <br/>
-  <button onClick={() => 
-                this.props.addGame 
-                ? this.props.addGame(this.props.game,this.state.conditionType)
-                : this.props.deleteGame(this.props.game)}>{
-                
-                this.props.addGame ? 'Add Game' : 'Delete Game'}
-        </button>
+  
 
-        {this.props.sellGame ? <button onClick={this.props.sellGame}>Sell Game</button> : ''}
+        {this.props.addGame ? <button onClick={() => this.props.addGame(this.props.game,this.state.conditionType)}>Add Game</button> : ''}
+        {this.props.deleteGame && !this.props.game.sold ? <button onClick={() => this.props.deleteGame(this.props.game)}>Delete Game</button> : ''}
+        {this.props.sellGame && !this.props.game.sold ? <button onClick={() => this.props.sellGame(this.props.game)}>Sell Game</button> : ''}
+        {this.props.buyGame ? <button onClick={() => this.props.buyGame(this.props.game)}>Buy Game</button> : ''}
 
-        {/* <button onClick={() => 
-                this.props.buyGame
-                ? this.props.buyGame(this.props.game)
-                : this.props.addGame ? this.props.addGame(this.props.game,this.state.conditionType) : this.props.sellGame(this.props.game)}>{
-                
-                this.props.buyGame ? 'Buy Game' : this.props.addGame ? 'Add Game' : 'Sell Game'}
-        </button> */}
-        {/* {this.props.deleteGame ? <button onClick={this.props.deleteGame}> Delete Game</button> : ''} */}
+        
+        {/* put email on game that you sell, and in profile have a paid button on Game*/}
+        
+        
+        
+        
+      <br/>
+       {this.props.game.sold ? <small>FOR SALE</small> : ""}
+
+       {/* usergames={this.props.usergames}
+       users={this.props.users} */}
+       {console.log(this.props.usergames)}
+       {console.log(this.props.users)}
+        
 
     </Card.Body>
     <Card.Footer>
