@@ -22,7 +22,8 @@ class App extends Component {
     currentGame: '',
     userCurrentGames: [],
     currentGameIds: [],
-    loggedIn: false
+    loggedIn: false, 
+    deletedGames: []
     
 
 
@@ -57,17 +58,18 @@ class App extends Component {
     console.log('deleting...')
 
    const filteredUserGames = this.state.userCurrentGames.filter(filteredGame => filteredGame != game)
-    this.setState({userCurrentGames: filteredUserGames})
-    // how do I refrsh profile page to show updated currentUserGames?
+   const notDeletedUserGames = this.state.soldgames.filter(soldGame => soldGame != game)
+   this.setState({userCurrentGames: filteredUserGames})
+    this.setState({soldgames: notDeletedUserGames})
+    this.setState({deletedGames: [...this.state.deletedGames, game]})
+
+    // go thro allgame and change the games status sold to false 
+    
     
     fetch(`http://localhost:3001/games/${game.id}`, {
       method:'DELETE',
       headers: {"Content-Type": "application/json"}
     })
-     
-
-    
-    
   }
 
 
@@ -76,7 +78,7 @@ class App extends Component {
   
   addGameHandler = (game,condition) => {
     //this.setState({allGames: [...this.state.allGames, game]})
-    
+    if (condition === 'Select Condition'){return}
     const platforms = game.platforms.map(platform => platform.platform.name)
     const genres = game.genres.map(genre => genre.name)
     
@@ -113,6 +115,7 @@ class App extends Component {
     })
     })
     .then(res => res.json())
+    .then(data => this.setState({usergames: [...this.state.usergames, data]}))
     
       
     //console.log("state after game added", this.state);
@@ -199,7 +202,18 @@ class App extends Component {
       this.setState({allGames: updatedGames})
       
       const allSold = this.state.allGames.filter(allgame => allgame.sold === true)
-      this.setState({soldgames: allSold})
+      
+      const filtered = allSold.filter(
+        function(e) {
+          return this.indexOf(e) < 0;
+        },
+        this.state.deletedGames
+    );
+
+    console.log(filtered)
+      
+
+      this.setState({soldgames: filtered})
 
 
     })
@@ -272,6 +286,7 @@ render() {
           userCurrentGames={this.state.userCurrentGames}
           updateGames={this.updateUserCurrentGames}
           deleteGame={this.deleteGameHandler}
+          allgames={this.state.allGames}
           
 
         />

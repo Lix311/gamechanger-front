@@ -50,6 +50,8 @@ class BuySellContainer extends Component {
               <CardDeck>
                 {this.filterGames().map((game) => (
                   <Game
+                    allgames={this.props.allgames}
+                    soldgames={this.props.soldgames}
                     usergames={this.props.usergames}
                     users={this.props.users}
                     key={game.id}

@@ -50,11 +50,50 @@ console.log(event)
 
 }
 
+ giveEmails = () => {
+  
+  // if (this.props.usergames === undefined){return}
+  // if (this.props.game.sold){ 
+  //   // console.log(this.props.game.id)
+  //   // console.log(this.props.usergames)
+  //   // console.log(this.props.users)
+  
+
+  //   const filteredUserGames = this.props.usergames.filter(usergame => usergame.game_id === this.props.game.id)
+  //   console.log(filteredUserGames)
+  //   const filteredUserId = filteredUserGames[0].user_id
+  //   // have the id of 1 run id thro userinfo and find email
+  //   return this.props.users.find(user => user.id === filteredUserId).email 
+
+
+
+    if (this.props.usergames === undefined){return}
+  
+  //   console.log(this.props.game.id)
+  //   console.log(this.props.allgames)
+  //   console.log(this.props.users)
+  // console.log(this.props.usergames)
+
+    const filteredUserGames = this.props.usergames.find(allgame => allgame.game_id === this.props.game.id)
+    console.log(filteredUserGames)
+    const filteredUserId = filteredUserGames.user_id
+    
+    return this.props.users.find(user => user.id === filteredUserId).email 
+  
+  
+ }
+
 
   
   
   render() { 
+    // id logic here? 
+   
+   
+    
     return ( 
+
+      
 
       <StyledCard>
     <Card.Img variant="top" src={this.props.game.background_image ? this.props.game.background_image : this.props.game.image } />
@@ -75,7 +114,7 @@ console.log(event)
   
 
         {this.props.addGame ? <button onClick={() => this.props.addGame(this.props.game,this.state.conditionType)}>Add Game</button> : ''}
-        {this.props.deleteGame && !this.props.game.sold ? <button onClick={() => this.props.deleteGame(this.props.game)}>Delete Game</button> : ''}
+        {this.props.deleteGame ? <button onClick={() => this.props.deleteGame(this.props.game)}>Delete Game</button> : ''}
         {this.props.sellGame && !this.props.game.sold ? <button onClick={() => this.props.sellGame(this.props.game)}>Sell Game</button> : ''}
         {this.props.buyGame ? <button onClick={() => this.props.buyGame(this.props.game)}>Buy Game</button> : ''}
 
@@ -86,12 +125,10 @@ console.log(event)
         
         
       <br/>
-       {this.props.game.sold ? <small>FOR SALE</small> : ""}
+       {this.props.game.sold ? <small>FOR SALE {this.giveEmails()} </small> : ""}
+     
 
-       {/* usergames={this.props.usergames}
-       users={this.props.users} */}
-       {console.log(this.props.usergames)}
-       {console.log(this.props.users)}
+       
         
 
     </Card.Body>

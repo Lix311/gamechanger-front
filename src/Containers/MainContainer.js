@@ -46,6 +46,7 @@ class MainContainer extends Component {
                     exact path="/collect"
                     render={()=>
                         <BuySellContainer 
+                            allgames={this.props.allgames}
                             games={this.props.soldgames}
                             buyGame={this.props.buyGame}
                             soldgames={this.props.soldgames}
