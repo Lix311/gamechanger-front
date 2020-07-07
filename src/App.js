@@ -79,6 +79,7 @@ class App extends Component {
   addGameHandler = (game,condition) => {
     //this.setState({allGames: [...this.state.allGames, game]})
     if (condition === 'Select Condition'){return}
+    if (this.state.loggedIn === false){return}
     const platforms = game.platforms.map(platform => platform.platform.name)
     const genres = game.genres.map(genre => genre.name)
     
