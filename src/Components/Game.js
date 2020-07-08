@@ -115,7 +115,7 @@ console.log(event)
         
         
       <br/>
-       {this.props.game.sold ? <small>FOR SALE: {this.giveEmails()} </small> : ""}
+       {this.props.game.sold ? <small>FOR SALE {': ' + this.giveEmails()} </small> : ""}
      
 
        
@@ -124,9 +124,9 @@ console.log(event)
     </Card.Body>
     <Card.Footer>
     <small>
-      {this.props.game.genres ? this.props.game.genres.map(gen => gen.name + ' ') : this.props.game.genre}
+      {this.props.game.genres ? this.props.game.genres.map(gen => gen.name + ' ') : this.props.game.genre.split(', ').join(' ')}
       <br/>
-      {this.props.game.platforms ? this.props.game.platforms.map(platform => platform.platform.name + ' ') : this.props.game.platform}
+      {this.props.game.platforms ? this.props.game.platforms.map(platform => platform.platform.name + ' ') : this.props.game.platform.split(', ').join(' ')}
     </small>
     </Card.Footer>
   </StyledCard>
