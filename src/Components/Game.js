@@ -124,9 +124,11 @@ console.log(event)
     </Card.Body>
     <Card.Footer>
     <small>
-      {this.props.game.genres ? this.props.game.genres.map(gen => gen.name + ' ') : this.props.game.genre.split(', ').join(' ')}
+      Release Date: {this.props.game.released ? this.props.game.released : this.props.game.release_date}
       <br/>
-      {this.props.game.platforms ? this.props.game.platforms.map(platform => platform.platform.name + ' ') : this.props.game.platform.split(', ').join(' ')}
+      Genres: {this.props.game.genres ? this.props.game.genres.map(gen => gen.name + ' ') : this.props.game.genre.split(', ').join(' ')}
+      <br/>
+      Platforms: {this.props.game.platforms ? this.props.game.platforms.map(platform => platform.platform.name + ' ') : this.props.game.platform.split(', ').join(' ')}
     </small>
     </Card.Footer>
   </StyledCard>
