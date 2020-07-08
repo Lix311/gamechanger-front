@@ -115,7 +115,7 @@ console.log(event)
         
         
       <br/>
-       {this.props.game.sold ? <small>FOR SALE {': ' + this.giveEmails()} </small> : ""}
+       {this.props.game.sold ? <small>FOR SALE {this.giveEmails()} </small> : ""}
      
 
        
