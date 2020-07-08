@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
 
 class Login extends Component {
     
@@ -15,9 +16,23 @@ class Login extends Component {
     }
 
     handleSubmit = (event) => {
+       
         event.preventDefault();
         let {username,password} = event.target
         this.props.login(username.value, password.value)
+
+        this.props.history.push('/profile')
+
+
+        
+        
+    }
+
+    signOut = (event) => {
+        event.preventDefault();
+        this.props.history.push('/')
+        window.location.reload();
+        
     }
 
     
@@ -53,13 +68,14 @@ render() {
                     <br/>
                     <input type='submit' value='Login' />
                     </form>
+                    <button onClick={this.signOut}>Log Out</button>
 
             </div>
         );
     }
 }
  
-export default Login;
+export default withRouter(Login);
 
 
 

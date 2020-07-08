@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 
 const StyledCard = styled.div`
-    background-color: grey;
+    background-color: black;
     height: 100%;
     width: 400px;
     padding: 8px;
@@ -83,9 +83,8 @@ console.log(event)
     
     return ( 
 
-      
-
-      <StyledCard>
+    
+    <StyledCard>
     <Card.Img variant="top" src={this.props.game.background_image ? this.props.game.background_image : this.props.game.image } />
     <Card.Body>
     <Card.Title><h4>{this.props.game.name ? this.props.game.name : this.props.game.title}</h4></Card.Title>
@@ -101,6 +100,7 @@ console.log(event)
   </DropdownButton>
   </Dropdown>
   <br/>
+  
   
 
         {this.props.addGame ? <button onClick={() => this.props.addGame(this.props.game,this.state.conditionType)}>Add Game</button> : ''}
@@ -124,6 +124,8 @@ console.log(event)
     </Card.Body>
     <Card.Footer>
     <small>
+      {this.props.game.genres ? this.props.game.genres.map(gen => gen.name + ' ') : this.props.game.genre}
+      <br/>
       {this.props.game.platforms ? this.props.game.platforms.map(platform => platform.platform.name + ' ') : this.props.game.platform}
     </small>
     </Card.Footer>

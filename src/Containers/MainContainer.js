@@ -38,6 +38,8 @@ class MainContainer extends Component {
                             sellGame={this.props.sellGame}
                             updateGames={this.props.updateGames}
                             deleteGame={this.props.deleteGame}
+                            loggedIn={this.props.loggedIn}
+                            currentUser={this.props.currentUser}
                         />
                     }
                 />
@@ -52,6 +54,7 @@ class MainContainer extends Component {
                             soldgames={this.props.soldgames}
                             usergames={this.props.usergames}
                             users={this.props.users}
+                            loggedIn={this.props.loggedIn}
                         />
                     }
                 />

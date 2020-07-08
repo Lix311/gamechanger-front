@@ -236,7 +236,7 @@ class App extends Component {
   loginHandler = (loginName, loginPassword) => {
     
     const matchingUser = this.state.userInfo.find(user => user.username === loginName)
-    
+    if (matchingUser === undefined){return}
     if (matchingUser.password === loginPassword){
        this.setState({loggedIn: !this.state.loggedIn})
        
@@ -274,6 +274,8 @@ render() {
     return (  
       <div>
         <MainContainer 
+        loggedIn={this.state.loggedIn}
+        currentUser={this.state.currentUser}
           login={this.loginHandler}
           games={this.state.games.results}
           usergames={this.state.usergames}

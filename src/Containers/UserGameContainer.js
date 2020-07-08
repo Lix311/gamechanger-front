@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const StyledPrice = styled.div`
   line-height: 1em;
-  text-align: right;
+  text-align: center;
   padding: 16px;
 `;
 
@@ -86,9 +86,10 @@ class UserGameContainer extends Component {
           placeholder='Filter Games'
         />
         <StyledPrice>
-          <h1 style={{ color: "GoldenRod" }}>GameChange: ${total}</h1>
+                            {/* {console.log(this.props.loggedIn, this.props.currentUser)} */}
+    { this.props.loggedIn ? <h3 style={{ color: "Black" }}> {this.props.currentUser.username}'s GameChange: ${total}</h3> : <h3>Please Log In</h3>}
         </StyledPrice>
-        <CardDeck>
+        { this.props.loggedIn ? <CardDeck>
           {this.filterGames().map((game) => (
             <Game
               updateGames={this.props.updateGames}
@@ -99,7 +100,7 @@ class UserGameContainer extends Component {
               deleteGame={this.props.deleteGame}
             />
           ))}
-        </CardDeck>
+        </CardDeck> : ''}
       </div>
     );
   }
