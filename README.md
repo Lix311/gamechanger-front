@@ -10,3 +10,9 @@ Profile page - your collection of games
 
 Collect page - sell your games here 
 
+Video Demo can be watched at this url https://vimeo.com/438256919
+
+
+
+
+
