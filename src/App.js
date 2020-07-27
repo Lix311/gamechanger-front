@@ -55,13 +55,14 @@ class App extends Component {
   }
 
   deleteGameHandler = (game) => {
-    console.log('deleting...')
+    
 
-   const filteredUserGames = this.state.userCurrentGames.filter(filteredGame => filteredGame != game)
-   const notDeletedUserGames = this.state.soldgames.filter(soldGame => soldGame != game)
-   this.setState({userCurrentGames: filteredUserGames})
-    this.setState({soldgames: notDeletedUserGames})
-    this.setState({deletedGames: [...this.state.deletedGames, game]})
+
+  //  const filteredUserGames = this.state.userCurrentGames.filter(filteredGame => filteredGame != game)
+  //  const notDeletedUserGames = this.state.soldgames.filter(soldGame => soldGame != game)
+  //  this.setState({userCurrentGames: filteredUserGames})
+  //   this.setState({soldgames: notDeletedUserGames})
+  //   this.setState({deletedGames: [...this.state.deletedGames, game]})
 
     // go thro allgame and change the games status sold to false 
     
