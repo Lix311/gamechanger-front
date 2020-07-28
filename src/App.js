@@ -58,11 +58,11 @@ class App extends Component {
     
 
 
-  //  const filteredUserGames = this.state.userCurrentGames.filter(filteredGame => filteredGame != game)
-  //  const notDeletedUserGames = this.state.soldgames.filter(soldGame => soldGame != game)
-  //  this.setState({userCurrentGames: filteredUserGames})
-  //   this.setState({soldgames: notDeletedUserGames})
-  //   this.setState({deletedGames: [...this.state.deletedGames, game]})
+   const filteredUserGames = this.state.userCurrentGames.filter(filteredGame => filteredGame != game)
+   const notDeletedUserGames = this.state.soldgames.filter(soldGame => soldGame != game)
+   this.setState({userCurrentGames: filteredUserGames})
+    this.setState({soldgames: notDeletedUserGames})
+    this.setState({deletedGames: [...this.state.deletedGames, game]})
 
     // go thro allgame and change the games status sold to false 
     
@@ -78,6 +78,7 @@ class App extends Component {
 
   
   addGameHandler = (game,condition) => {
+    console.log(game)
     //this.setState({allGames: [...this.state.allGames, game]})
     if (condition === 'Select Condition'){return}
     if (this.state.loggedIn === false){return}

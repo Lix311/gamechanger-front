@@ -19,6 +19,8 @@ class Game extends Component {
     conditionType: 'Select Condition',
     sold: false
   }
+
+  
   
   getDescription = () => {
     if (this.props.game.slug){
@@ -79,7 +81,11 @@ console.log(event)
   render() { 
     // id logic here? 
    
-   
+    let game = {
+      game: this.props.game,
+      // ... and other props you want
+      condition: this.props.conditionType
+    }
     
     return ( 
 
@@ -106,7 +112,7 @@ console.log(event)
         {this.props.addGame ? <button onClick={() => this.props.addGame(this.props.game,this.state.conditionType)}>Add Game</button> : ''}
         {this.props.deleteGame ? <button onClick={() => this.props.deleteGame(this.props.game)}>Delete Game</button> : ''}
         {this.props.sellGame && !this.props.game.sold ? <button onClick={() => this.props.sellGame(this.props.game)}>Sell Game</button> : ''}
-        {this.props.buyGame ? <button onClick={() => this.openEmail(this.giveEmails())}> Contact Seller</button> : ''}
+        {this.props.buyGame ? <button onClick={() => this.openEmail(this.props.usergames)}> Contact Seller</button> : ''}
 
         
         {/* put email on game that you sell, and in profile have a paid button on Game*/}
